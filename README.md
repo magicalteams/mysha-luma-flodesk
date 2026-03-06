@@ -30,11 +30,12 @@ These segment names must exist in Flodesk **before** running the backfill:
 | City | Flodesk Segment Name |
 |------|----------------------|
 | Miami / Miami Beach / etc. | `Location: MIA` |
-| New York / Brooklyn / etc. | `Location: NY` |
+| New York / Brooklyn / etc. | `Location: NYC` |
 | Los Angeles / Santa Monica / etc. | `Location: LA` |
-| Austin | `Location: AUSTIN` |
+| Austin | `Location: ATX` |
+| San Francisco / Oakland / etc. | `Location: SF` |
 
-To add a new city, edit `src/lib/city-mapper.ts`.
+To add a new city, use the admin UI at `/admin` or edit `src/lib/city-mapper.ts`.
 
 ---
 
