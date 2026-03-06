@@ -115,6 +115,10 @@ const CITY_TO_SEGMENT_MAP: Record<string, FlodesKLocationSegment> = {
   "new rochelle": FLODESK_LOCATION_SEGMENTS.NEW_YORK,
   "stamford": FLODESK_LOCATION_SEGMENTS.NEW_YORK,
   "greenwich": FLODESK_LOCATION_SEGMENTS.NEW_YORK,
+  "kings county": FLODESK_LOCATION_SEGMENTS.NEW_YORK,
+  "southampton": FLODESK_LOCATION_SEGMENTS.NEW_YORK,
+  "bridgehampton": FLODESK_LOCATION_SEGMENTS.NEW_YORK,
+  "bronxville": FLODESK_LOCATION_SEGMENTS.NEW_YORK,
 
   // ── Los Angeles / SoCal ────────────────────────────────────────────────────
   "los angeles": FLODESK_LOCATION_SEGMENTS.LOS_ANGELES,
@@ -156,6 +160,7 @@ const CITY_TO_SEGMENT_MAP: Record<string, FlodesKLocationSegment> = {
   "calabasas": FLODESK_LOCATION_SEGMENTS.LOS_ANGELES,
   "thousand oaks": FLODESK_LOCATION_SEGMENTS.LOS_ANGELES,
   "santa clarita": FLODESK_LOCATION_SEGMENTS.LOS_ANGELES,
+  "la cañada flintridge": FLODESK_LOCATION_SEGMENTS.LOS_ANGELES,
 
   // ── Austin / Central Texas ─────────────────────────────────────────────────
   "austin": FLODESK_LOCATION_SEGMENTS.AUSTIN,
@@ -258,6 +263,8 @@ export const DEFAULT_CITY_MAP: Record<string, string> = {
   "jersey city": "NYC", "weehawken": "NYC", "fort lee": "NYC",
   "yonkers": "NYC", "white plains": "NYC", "new rochelle": "NYC",
   "stamford": "NYC", "greenwich": "NYC",
+  "kings county": "NYC", "southampton": "NYC", "bridgehampton": "NYC",
+  "bronxville": "NYC",
   // Los Angeles / SoCal
   "los angeles": "LA", "la": "LA", "santa monica": "LA",
   "venice": "LA", "west hollywood": "LA", "beverly hills": "LA",
@@ -272,6 +279,7 @@ export const DEFAULT_CITY_MAP: Record<string, string> = {
   "long beach": "LA", "downtown la": "LA", "dtla": "LA",
   "koreatown": "LA", "inglewood": "LA", "calabasas": "LA",
   "thousand oaks": "LA", "santa clarita": "LA", "north hollywood": "LA",
+  "la cañada flintridge": "LA",
   // Austin / Central Texas
   "austin": "ATX", "round rock": "ATX", "cedar park": "ATX",
   "pflugerville": "ATX", "georgetown": "ATX", "lakeway": "ATX",
