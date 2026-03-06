@@ -35,7 +35,7 @@ export default async function AdminPage() {
             alt="Magical Teams & Mysha Admin Dashboard"
             className={styles.headerLogo}
           />
-          <form action={logoutAction}>
+          <form action={logoutAction} className={styles.headerLogout}>
             <button type="submit" className={styles.logoutBtn}>
               Log out
             </button>

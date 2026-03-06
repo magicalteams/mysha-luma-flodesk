@@ -12,6 +12,7 @@
 }
 
 .header {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -19,8 +20,14 @@
   gap: 20px;
 }
 
+.headerLogout {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
 .headerLogo {
-  height: 192px;
+  height: 154px;
   width: auto;
   object-fit: contain;
 }
@@ -119,7 +126,7 @@
 }
 
 .tr:hover {
-  background: #fafafa;
+  background: #fdf3f0;
 }
 
 .td {
@@ -213,8 +220,8 @@
 }
 
 .input:focus {
-  border-color: #111;
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+  border-color: #E8613A;
+  box-shadow: 0 0 0 3px rgba(232, 97, 58, 0.1);
 }
 
 .input::placeholder {
@@ -243,15 +250,15 @@
 }
 
 .select:focus {
-  border-color: #111;
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+  border-color: #E8613A;
+  box-shadow: 0 0 0 3px rgba(232, 97, 58, 0.1);
 }
 
 /* ── Buttons ───────────────────────────────────── */
 
 .btnPrimary {
   padding: 9px 20px;
-  background: #111;
+  background: #E8613A;
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -267,7 +274,7 @@
 }
 
 .btnPrimary:hover {
-  background: #333;
+  background: #d4532e;
 }
 
 .btnPrimary:active {
@@ -369,8 +376,8 @@
 }
 
 .searchInput:focus {
-  border-color: #111;
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+  border-color: #E8613A;
+  box-shadow: 0 0 0 3px rgba(232, 97, 58, 0.1);
   background: #fff;
 }
 
@@ -408,7 +415,7 @@
 }
 
 .loginLogo {
-  height: 168px;
+  height: 134px;
   width: auto;
   object-fit: contain;
   margin-bottom: 8px;
@@ -456,8 +463,8 @@
 }
 
 .loginInput:focus {
-  border-color: #111;
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+  border-color: #E8613A;
+  box-shadow: 0 0 0 3px rgba(232, 97, 58, 0.1);
 }
 
 .loginBtn {
@@ -465,7 +472,7 @@
   padding: 10px 16px;
   font-size: 14px;
   font-weight: 500;
-  background: #111;
+  background: #E8613A;
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -476,7 +483,7 @@
 }
 
 .loginBtn:hover {
-  background: #333;
+  background: #d4532e;
 }
 
 .loginBtn:active {
@@ -512,8 +519,12 @@
 
   .header {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     gap: 12px;
+  }
+
+  .headerLogo {
+    height: 120px;
   }
 
   .loginCard {
