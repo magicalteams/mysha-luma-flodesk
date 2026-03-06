@@ -6,6 +6,7 @@ import {
   ADMIN_COOKIE_VALUE,
   COOKIE_OPTIONS,
 } from "@/lib/admin-auth";
+import styles from "../admin.module.css";
 
 async function loginAction(formData: FormData) {
   "use server";
@@ -29,54 +30,41 @@ export default async function LoginPage({
   const { error } = await searchParams;
 
   return (
-    <div style={{ maxWidth: 400, margin: "80px auto", fontFamily: "system-ui" }}>
-      <h1 style={{ fontSize: 20, marginBottom: 24 }}>Mysha Admin</h1>
-
-      {error && (
-        <p style={{ color: "#dc2626", marginBottom: 16 }}>
-          Incorrect password. Try again.
-        </p>
-      )}
-
-      <form action={loginAction}>
-        <label
-          htmlFor="password"
-          style={{ display: "block", marginBottom: 8, fontSize: 14 }}
-        >
-          Password
-        </label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          required
-          autoFocus
-          style={{
-            width: "100%",
-            padding: "8px 12px",
-            fontSize: 14,
-            border: "1px solid #d1d5db",
-            borderRadius: 6,
-            marginBottom: 16,
-            boxSizing: "border-box",
-          }}
+    <div className={styles.loginPage}>
+      <div className={styles.loginCard}>
+        <img
+          src="/header.png"
+          alt="Magical Teams & Mysha Admin Dashboard"
+          className={styles.loginLogo}
         />
-        <button
-          type="submit"
-          style={{
-            width: "100%",
-            padding: "8px 16px",
-            fontSize: 14,
-            backgroundColor: "#111",
-            color: "#fff",
-            border: "none",
-            borderRadius: 6,
-            cursor: "pointer",
-          }}
-        >
-          Log in
-        </button>
-      </form>
+        <p className={styles.loginSubtitle}>
+          Enter your password to continue
+        </p>
+
+        {error && (
+          <div className={styles.loginError}>
+            Incorrect password. Please try again.
+          </div>
+        )}
+
+        <form action={loginAction}>
+          <label htmlFor="password" className={styles.loginLabel}>
+            Password
+          </label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            required
+            autoFocus
+            className={styles.loginInput}
+            placeholder="Enter admin password"
+          />
+          <button type="submit" className={styles.loginBtn}>
+            Log in
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

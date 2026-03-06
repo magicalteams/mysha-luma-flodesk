@@ -1,12 +1,21 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { ADMIN_COOKIE_NAME } from "@/lib/admin-auth";
 import {
   addSegment,
   removeSegment,
   addCityMapping,
   removeCityMapping,
 } from "@/lib/kv-city-mapper";
+
+export async function logoutAction() {
+  const cookieStore = await cookies();
+  cookieStore.delete(ADMIN_COOKIE_NAME);
+  redirect("/admin/login");
+}
 
 export async function addSegmentAction(formData: FormData) {
   const key = (formData.get("key") as string)?.trim().toUpperCase();
