@@ -5,7 +5,7 @@
  *
  * Setup in Luma:
  *   Dashboard → Settings → Webhooks → Add Endpoint
- *   URL: https://your-app.vercel.app/api/webhooks/luma
+ *   URL: https://mysha-luma-flodesk.vercel.app/api/webhooks/luma?secret=<LUMA_WEBHOOK_SECRET>
  *   Events: event.registration.created
  *
  * Flow:
@@ -15,11 +15,10 @@
  *   4. Upserts the registrant into Flodesk with the segment
  */
 
-import { timingSafeEqual } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { FlodesKClient } from "@/lib/flodesk-client";
-import { resolveSegmentForCity } from "@/lib/city-mapper";
+import { resolveSegmentForCityAsync } from "@/lib/kv-city-mapper";
 
 // ─── Zod Schemas ──────────────────────────────────────────────────────────────
 // Based on Luma's documented webhook payload for event.registration.created
@@ -67,62 +66,20 @@ function getFlodesKClient(): FlodesKClient {
   return _flodesk;
 }
 
-// ─── Webhook signature verification ───────────────────────────────────────────
-// Luma signs webhooks with HMAC-SHA256. Verify before processing.
-
-async function verifyLumaSignature(
-  req: NextRequest,
-  rawBody: string
-): Promise<boolean> {
-  const secret = process.env.LUMA_WEBHOOK_SECRET;
-  if (!secret) {
-    console.warn("LUMA_WEBHOOK_SECRET not set — skipping signature verification");
-    return true;
-  }
-
-  const signature = req.headers.get("x-luma-signature");
-  if (!signature) return false;
-
-  const encoder = new TextEncoder();
-  const key = await crypto.subtle.importKey(
-    "raw",
-    encoder.encode(secret),
-    { name: "HMAC", hash: "SHA-256" },
-    false,
-    ["sign"]
-  );
-
-  const sig = await crypto.subtle.sign("HMAC", key, encoder.encode(rawBody));
-  const expected = Buffer.from(sig).toString("hex");
-
-  // Constant-time comparison to prevent timing attacks
-  const expectedBuf = Buffer.from(expected, "utf-8");
-  const signatureBuf = Buffer.from(signature, "utf-8");
-
-  if (expectedBuf.length !== signatureBuf.length) {
-    return false;
-  }
-
-  return timingSafeEqual(expectedBuf, signatureBuf);
-}
-
 // ─── Route Handler ────────────────────────────────────────────────────────────
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
-  // 1. Read raw body for signature verification
-  const rawBody = await req.text();
-
-  // 2. Verify webhook authenticity
-  const isValid = await verifyLumaSignature(req, rawBody);
-  if (!isValid) {
-    console.warn("Luma webhook: invalid signature");
+  // 1. Verify shared secret from query param
+  const secret = req.nextUrl.searchParams.get("secret");
+  if (secret !== process.env.LUMA_WEBHOOK_SECRET) {
+    console.warn("Luma webhook: invalid or missing secret");
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  // 3. Parse + validate payload
+  // 2. Parse + validate payload
   let payload: z.infer<typeof LumaWebhookPayloadSchema>;
   try {
-    const json = JSON.parse(rawBody);
+    const json = await req.json();
     payload = LumaWebhookPayloadSchema.parse(json);
   } catch (err) {
     console.error("Luma webhook: payload validation failed", err);
@@ -142,7 +99,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
   // 5. Resolve city → segment
   const city = event.geo_address_json?.city;
-  const segment = resolveSegmentForCity(city);
+  const segment = await resolveSegmentForCityAsync(city);
 
   if (!segment) {
     console.log(

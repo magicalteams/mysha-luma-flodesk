@@ -30,13 +30,9 @@ These segment names must exist in Flodesk **before** running the backfill:
 | City | Flodesk Segment Name |
 |------|----------------------|
 | Miami / Miami Beach / etc. | `Location: MIA` |
-| New York / Brooklyn / etc. | `Location: NYC` |
+| New York / Brooklyn / etc. | `Location: NY` |
 | Los Angeles / Santa Monica / etc. | `Location: LA` |
-| Austin | `Location: Austin` |
-| Chicago | `Location: Chicago` |
-| San Francisco / Oakland / etc. | `Location: SF` |
-| Boston / Cambridge | `Location: Boston` |
-| Washington D.C. | `Location: DC` |
+| Austin | `Location: AUSTIN` |
 
 To add a new city, edit `src/lib/city-mapper.ts`.
 
@@ -111,9 +107,8 @@ vercel deploy
 
 1. Go to **lu.ma → Settings → Webhooks**
 2. Click **Add Endpoint**
-3. Set URL to: `https://your-app.vercel.app/api/webhooks/luma`
+3. Set URL to: `https://mysha-luma-flodesk.vercel.app/api/webhooks/luma?secret=<LUMA_WEBHOOK_SECRET>`
 4. Select event: `event.registration.created`
-5. Copy the generated **Signing Secret** → add to `.env.local` as `LUMA_WEBHOOK_SECRET`
 
 From this point forward, every new Luma registration will automatically:
 - Upsert the guest into Flodesk

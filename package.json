@@ -13,6 +13,7 @@
     "backfill:dry": "tsx scripts/backfill-luma-flodesk.ts --dry-run"
   },
   "dependencies": {
+    "@upstash/redis": "^1.36.3",
     "dotenv": "^16.4.0",
     "next": "^16.0.0",
     "react": "^19.1.0",

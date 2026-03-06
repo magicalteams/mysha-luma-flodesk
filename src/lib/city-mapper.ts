@@ -13,13 +13,9 @@
 
 export const FLODESK_LOCATION_SEGMENTS = {
   MIAMI: "Location: MIA",
-  NEW_YORK: "Location: NYC",
+  NEW_YORK: "Location: NY",
   LOS_ANGELES: "Location: LA",
-  AUSTIN: "Location: Austin",
-  CHICAGO: "Location: Chicago",
-  SAN_FRANCISCO: "Location: SF",
-  BOSTON: "Location: Boston",
-  WASHINGTON_DC: "Location: DC",
+  AUSTIN: "Location: AUSTIN",
 } as const;
 
 export type FlodesKLocationSegment =
@@ -59,26 +55,6 @@ const CITY_TO_SEGMENT_MAP: Record<string, FlodesKLocationSegment> = {
 
   // Austin
   "austin": FLODESK_LOCATION_SEGMENTS.AUSTIN,
-
-  // Chicago
-  "chicago": FLODESK_LOCATION_SEGMENTS.CHICAGO,
-
-  // San Francisco
-  "san francisco": FLODESK_LOCATION_SEGMENTS.SAN_FRANCISCO,
-  "sf": FLODESK_LOCATION_SEGMENTS.SAN_FRANCISCO,
-  "oakland": FLODESK_LOCATION_SEGMENTS.SAN_FRANCISCO,
-  "berkeley": FLODESK_LOCATION_SEGMENTS.SAN_FRANCISCO,
-
-  // Boston
-  "boston": FLODESK_LOCATION_SEGMENTS.BOSTON,
-  "cambridge": FLODESK_LOCATION_SEGMENTS.BOSTON,
-  "somerville": FLODESK_LOCATION_SEGMENTS.BOSTON,
-
-  // Washington DC
-  "washington": FLODESK_LOCATION_SEGMENTS.WASHINGTON_DC,
-  "washington dc": FLODESK_LOCATION_SEGMENTS.WASHINGTON_DC,
-  "washington d.c.": FLODESK_LOCATION_SEGMENTS.WASHINGTON_DC,
-  "dc": FLODESK_LOCATION_SEGMENTS.WASHINGTON_DC,
 };
 
 /**
@@ -89,6 +65,45 @@ const CITY_TO_SEGMENT_MAP: Record<string, FlodesKLocationSegment> = {
  * resolveSegmentForCity("Miami Beach") // → "Location: MIA"
  * resolveSegmentForCity("Tokyo")       // → null
  */
+// ─── Default data for KV seeding ──────────────────────────────────────────────
+// Used by kv-city-mapper.ts to seed Redis on first run.
+
+export const DEFAULT_SEGMENTS: Record<string, string> = {
+  MIAMI: "Location: MIA",
+  NY: "Location: NY",
+  LA: "Location: LA",
+  AUSTIN: "Location: AUSTIN",
+};
+
+export const DEFAULT_CITY_MAP: Record<string, string> = {
+  "miami": "MIAMI",
+  "miami beach": "MIAMI",
+  "coral gables": "MIAMI",
+  "brickell": "MIAMI",
+  "coconut grove": "MIAMI",
+  "south miami": "MIAMI",
+  "wynwood": "MIAMI",
+  "new york": "NY",
+  "new york city": "NY",
+  "nyc": "NY",
+  "brooklyn": "NY",
+  "manhattan": "NY",
+  "queens": "NY",
+  "bronx": "NY",
+  "hoboken": "NY",
+  "jersey city": "NY",
+  "los angeles": "LA",
+  "la": "LA",
+  "santa monica": "LA",
+  "venice": "LA",
+  "west hollywood": "LA",
+  "beverly hills": "LA",
+  "culver city": "LA",
+  "austin": "AUSTIN",
+};
+
+// ─── Sync resolver (used by backfill script) ─────────────────────────────────
+
 export function resolveSegmentForCity(
   city: string | undefined | null
 ): FlodesKLocationSegment | null {
